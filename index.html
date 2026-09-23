@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Lumen - 아름다운 서재</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Noto+Serif+KR:wght@400;600&family=Noto+Sans+KR:wght@400;500&display=swap" rel="stylesheet">
+<link rel="manifest" href="data:application/manifest+json;base64,ewogICJuYW1lIjogIkx1bWVuIFJlYWRlciAtIOyVhOumhOuLpOyatCDshJzsnqwiLAogICJzaG9ydF9uYW1lIjogIkx1bWVuIiwKICAiZGlzcGxheSI6ICJzdGFuZGFsb25lIiwKICAiYmFja2dyb3VuZF9jb2xvciI6ICIjRkZGRUZCIiwKICAidGhlbWVfY29sb3IiOiAiIzFBMUExOCIsCiAgInN0YXJ0X3VybCI6ICIuLyIsCiAgImljb25zIjogWwogICAgewogICAgICAic3JjIjogImljb24tMTkyLnBuZyIsCiAgICAgICJzaXplcyI6ICIxOTJ4MTkyIiwKICAgICAgInR5cGUiOiAiaW1hZ2UvcG5nIgogICAgfSwKICAgIHsKICAgICAgInNyYyI6ICJpY29uLTUxMi5wbmciLAogICAgICAic2l6ZXMiOiAiNTEyeDUxMiIsCiAgICAgICJ0eXBlIjogImltYWdlL3BuZyIKICAgIH0KICBdCn0=">
+<meta name="theme-color" content="#1A1A18">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root{--paper:#FFFEFB;--ink:#1A1A18;--gold:#C9A86A;--gold-soft:rgba(201,168,106,0.18);--line:rgba(26,26,24,0.08);--muted:#8A8A86}
+*{box-sizing:border-box}
+html,body{overflow:auto;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Noto Sans KR',system-ui,sans-serif;background:radial-gradient(1200px 600px at 50% -12%, var(--gold-soft), transparent 62%), var(--paper);color:var(--ink);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+#global-file{position:fixed;left:-9999px;top:-9999px;opacity:0;pointer-events:none;width:1px;height:1px}
+.glass{position:sticky;top:0;z-index:40;height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 20px;background:rgba(255,254,251,0.84);backdrop-filter:blur(18px) saturate(1.15);-webkit-backdrop-filter:blur(18px) saturate(1.15);border-bottom:1px solid var(--line)}
+.brand{font-family:Fraunces,serif;font-weight:700;font-size:20px;letter-spacing:-0.02em;display:flex;align-items:center;gap:10px}
+.brand i{width:28px;height:28px;border-radius:9px;background:#1A1A18;color:#FFFEFB;display:grid;place-items:center;font-style:normal;font-size:14px;font-family:Fraunces,serif}
+.actions{display:flex;gap:8px;align-items:center}
+.btn{appearance:none;border:0;cursor:pointer;border-radius:999px;padding:9px 16px;font-size:13.5px;font-weight:500;font-family:'Noto Sans KR',sans-serif;transition:transform .12s ease, background .18s}
+.btn:active{transform:scale(0.97)}
+.btn-ghost{background:rgba(26,26,24,0.06);color:var(--ink)}
+.btn-dark{background:#1A1A18;color:#FFFEFB}
+.btn-gold{background:var(--gold);color:#1A1A18}
+.layout{display:block}
+#paper{max-width:760px;margin:0 auto;padding:8px 22px 160px}
+.book-title-block{text-align:center;padding:72px 12px 52px;border-bottom:1px solid rgba(26,26,24,0.06);margin-bottom:8px}
+.author-label{color:var(--gold);text-transform:uppercase;font-family:'Noto Sans KR',sans-serif;font-size:11px;letter-spacing:0.18em;font-weight:600;margin-bottom:18px}
+.book-main-title{font-family:Fraunces,serif;font-size:38px;line-height:1.22;font-weight:700;letter-spacing:-0.02em;word-break:keep-all}
+.ornament{margin:22px 0 0;color:var(--gold);font-size:14px;letter-spacing:0.34em}
+.prose{font-family:'Noto Serif KR',serif;font-size:18.5px;line-height:1.95;word-break:keep-all;overflow-wrap:break-word;color:#1E1E1C}
+.prose p{margin:0 0 1.55em}
+.prose p.dialogue{margin-left:0.9em;text-indent:-0.6em;color:#2A2A28}
+.prose p:first-of-type::first-letter{float:left;font-family:Fraunces,serif;font-size:3.2em;line-height:0.86;margin:0.08em 0.14em 0 0;font-weight:700;color:var(--ink)}
+.chapter-divider{display:flex;align-items:center;gap:18px;margin:88px 0 36px}
+.chapter-divider .line{flex:1;height:1px;background:linear-gradient(90deg, transparent, #C9A86A 52%, transparent);opacity:.75}
+.chapter-divider .num{font-family:Fraunces,serif;font-size:22px;color:var(--gold);letter-spacing:0.12em;white-space:nowrap}
+.deco-title{text-align:center;font-family:Fraunces,serif;font-size:22px;font-weight:600;margin:60px 0 28px;color:var(--ink);letter-spacing:0.01em;word-break:keep-all}
+.bottom-island{position:fixed;left:50%;bottom:22px;transform:translateX(-50%);background:#1A1A18;color:#FFFEFB;border-radius:999px;padding:10px 14px 10px 18px;display:flex;align-items:center;gap:14px;box-shadow:0 16px 36px rgba(0,0,0,0.22), 0 2px 8px rgba(0,0,0,0.18);z-index:50;min-width:300px;max-width:94vw;backdrop-filter:blur(8px)}
+.progress-track{width:84px;height:2px;background:rgba(255,254,251,0.22);border-radius:999px;overflow:hidden;flex-shrink:0}
+.progress-fill{height:100%;background:var(--gold);width:0%;transition:width .18s ease}
+.island-meta{display:flex;align-items:center;gap:10px;font-size:12.5px;letter-spacing:0.02em;white-space:nowrap}
+.island-meta b{font-weight:600}
+#toc-panel{position:fixed;top:0;left:0;bottom:0;width:380px;max-width:88vw;background:var(--paper);border-right:1px solid var(--line);z-index:70;transform:translateX(-100%);transition:transform .32s cubic-bezier(0.32,0.72,0,1);display:flex;flex-direction:column}
+body.toc-open #toc-panel{transform:translateX(0)}
+body.toc-open{overflow:hidden}
+.toc-head{height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 18px;border-bottom:1px solid var(--line);flex-shrink:0}
+.toc-head h2{font-family:Fraunces,serif;font-size:18px;margin:0}
+#toc-list{padding:12px 18px 24px;overflow:auto}
+.toc-item{display:flex;align-items:baseline;gap:8px;padding:10px 4px;border-radius:10px;cursor:pointer;transition:background .14s}
+.toc-item:hover{background:rgba(26,26,24,0.04)}
+.toc-item .num{font-family:Fraunces,serif;color:var(--gold);min-width:26px;font-size:13px}
+.toc-item .title{flex:1;font-size:14.2px;line-height:1.5;word-break:keep-all}
+.toc-item .dots{flex:1;border-bottom:1px dotted rgba(26,26,24,0.18);margin:0 8px;transform:translateY(-3px);min-width:12px}
+.toc-item .page{font-size:11.5px;color:var(--muted);min-width:14px;text-align:right}
+#bm-toast{position:fixed;left:50%;bottom:88px;transform:translateX(-50%);background:#1A1A18;color:#fff;padding:8px 14px;border-radius:999px;font-size:12.5px;opacity:0;pointer-events:none;transition:opacity .22s;z-index:80}
+.settings{margin:28px 0 0;padding:18px;border:1px solid var(--line);border-radius:18px;background:rgba(255,255,255,0.6)}
+.settings h3{margin:0 0 12px;font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);font-family:'Noto Sans KR',sans-serif}
+.font-ctrl{display:flex;gap:8px}
+@media (max-width:760px){#paper{padding:6px 18px 140px}.book-main-title{font-size:32px}.prose{font-size:17.5px;line-height:1.92}.glass{padding:0 14px}}
+</style>
+</head>
+<body>
+<input type="file" id="global-file" accept=".txt,.html,.htm,text/plain,text/html">
+<div id="app">
+  <header class="glass">
+    <div class="brand"><i>L</i><span>Lumen</span></div>
+    <div class="actions">
+      <button id="toc-btn" class="btn btn-ghost">목차</button>
+      <button id="open-btn" class="btn btn-dark">파일 열기</button>
+    </div>
+  </header>
+  <div class="layout">
+    <aside id="toc-panel" aria-label="목차">
+      <div class="toc-head"><h2>목차</h2><button id="toc-close" class="btn btn-ghost" style="padding:6px 12px">닫기</button></div>
+      <div id="toc-list"></div>
+      <div style="padding:0 18px 18px">
+        <div class="settings">
+          <h3>서재 설정</h3>
+          <div class="font-ctrl">
+            <button class="btn btn-ghost" id="font-dec">가 작게</button>
+            <button class="btn btn-ghost" id="font-inc">가 크게</button>
+          </div>
+          <div style="margin-top:12px;font-size:12.5px;color:var(--muted);line-height:1.6">CP949 / EUC-KR / UTF-8 자동 감지 · 오프라인 지원 · 최근 읽은 위치 저장</div>
+        </div>
+      </div>
+    </aside>
+    <main id="paper">
+      <div id="book-header"></div>
+      <article id="reader-content" class="prose"></article>
+    </main>
+  </div>
+  <div class="bottom-island" role="status" aria-live="polite">
+    <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+    <div class="island-meta"><span id="progress-text" style="min-width:32px"><b>0%</b></span><span style="opacity:.5">·</span><span id="last-file" style="max-width:120px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;opacity:.9">샘플</span></div>
+    <button id="bm-btn" class="btn btn-gold" style="margin-left:auto;padding:7px 12px;font-size:12.5px">북마크</button>
+  </div>
+  <div id="bm-toast"></div>
+</div>
+<script>
+(function(){
+  var $ = function(s){ return document.querySelector(s); };
+  var globalFile = document.getElementById('global-file');
+  window.openFilePicker = function(){ globalFile.click(); };
+  function decodeEntities(str){
+    var ta=document.createElement('textarea');
+    ta.innerHTML=str;
+    return ta.value;
+  }
+  function smartDecode(buf){
+    var u8 = new Uint8Array(buf);
+    var sample = Math.min(u8.length, 8000);
+    var high=0;
+    for(var i=0;i<sample;i++){ var b=u8[i]; if(b>=0x81 && b<=0xFE) high++; }
+    var ratio = sample ? high/sample : 0;
+    function tryLabel(label){
+      try{ return new TextDecoder(label).decode(u8); }catch(e){ return null; }
+    }
+    if(ratio>0.18){
+      var t = tryLabel('windows-949') || tryLabel('euc-kr') || tryLabel('ms949');
+      if(t){
+        var hangul = (t.match(/[가-힣]/g)||[]).length;
+        if(hangul>5) return t;
+      }
+    }
+    try{
+      var dec = new TextDecoder('utf-8',{fatal:true});
+      var txt = dec.decode(u8);
+      if(ratio>0.28){
+        var h2=(txt.match(/[가-힣]/g)||[]).length;
+        if(h2<10){
+          throw new Error('fallback cp949');
+        }
+      }
+      return txt;
+    }catch(e){}
+    var t2 = tryLabel('windows-949') || tryLabel('euc-kr');
+    if(t2) return t2;
+    return new TextDecoder().decode(u8);
+  }
+  function isDialogue(line){
+    var t=line.trim();
+    if(!t) return false;
+    return /^["'“”‘’\-—–―]/.test(t) || /^\s*[\"“”]/.test(t) || (t.indexOf('"')>=0 && t.length<140);
+  }
+  function isStrictHeading(line){
+    var t=line.trim();
+    if(!t) return false;
+    if(t.length>90) return false;
+    if(isDialogue(t)) return false;
+    if(/^●.+●$/.test(t)) return true;
+    if(/^[-—−=]+\s*\d+\s*[-—−=]+$/.test(t)) return true;
+    if(/^제\s*\d+\s*[장화부편]/i.test(t)) return true;
+    if(/^(Chapter|CHAPTER)\s*\d+/i.test(t)) return true;
+    if(t.length<46 && !/[.!?。]$/.test(t) && t.split(' ').length<11){
+      return /[가-힣A-Za-z]$/.test(t);
+    }
+    return false;
+  }
+  function parseBookTitle(raw){
+    var author='';
+    var title=raw.trim();
+    var m=title.match(/\[([^\]]+)\]\s*$/);
+    if(m){ author=m[1]; title=title.replace(m[0],'').trim(); }
+    var pm=title.match(/^([^)]+)\)\s*(.+)$/);
+    if(pm){ title=pm[2].trim(); }
+    return {author:author, title:title};
+  }
+  var blocks=[];
+  var toc=[];
+  var seenHeadings;
+  function parseText(rawText){
+    rawText=decodeEntities(rawText);
+    var lines=rawText.split(/\r?\n/);
+    blocks=[];
+    toc=[];
+    seenHeadings=new Set();
+    var paraBuf=[];
+    var firstTitle=null;
+    function flushPara(){
+      if(paraBuf.length===0) return;
+      var txt=paraBuf.join(' ').trim();
+      paraBuf=[];
+      if(!txt) return;
+      if(!firstTitle && txt.length<120){
+        var parsed=parseBookTitle(txt);
+        if(parsed.title && parsed.title.length>1){
+          firstTitle=parsed;
+          blocks.push({type:'bookTitle', data:parsed});
+          return;
+        }
+      }
+      if(/^●(.+)●$/.test(txt)){
+        var inner=txt.replace(/^●\s*|\s*●$/g,'').trim();
+        var key=inner.toLowerCase();
+        if(!seenHeadings.has(key)){
+          seenHeadings.add(key);
+          blocks.push({type:'decoTitle', text:inner});
+          toc.push({type:'deco', title:inner, id:'h-'+toc.length});
+        }
+        return;
+      }
+      if(/^[-—−]+\s*\d+\s*[-—−]+$/.test(txt)){
+        var num=txt.replace(/[^0-9]/g,'');
+        var k='ch-'+num;
+        if(!seenHeadings.has(k)){
+          seenHeadings.add(k);
+          blocks.push({type:'chapter', num:num});
+          toc.push({type:'chapter', title:num+'장', num:num, id:'h-'+toc.length});
+        }
+        return;
+      }
+      if(isStrictHeading(txt)){
+        var key2=txt.toLowerCase();
+        if(seenHeadings.has(key2)) return;
+        seenHeadings.add(key2);
+        blocks.push({type:'heading', text:txt});
+        toc.push({type:'heading', title:txt, id:'h-'+toc.length});
+        return;
+      }
+      if(isDialogue(txt)){
+        blocks.push({type:'dialogue', text:txt});
+      }else{
+        blocks.push({type:'para', text:txt});
+      }
+    }
+    for(var i=0;i<lines.length;i++){
+      var line=lines[i];
+      if(line.trim()===''){
+        flushPara();
+      }else{
+        var t=line.trim();
+        if(/^●.+●$/.test(t) || /^[-—−]+\s*\d+\s*[-—−]+$/.test(t) || isStrictHeading(t)){
+          flushPara();
+          if(/^●(.+)●$/.test(t)){
+            var inner=t.replace(/^●\s*|\s*●$/g,'').trim();
+            var key=inner.toLowerCase();
+            if(!seenHeadings.has(key)){
+              seenHeadings.add(key);
+              blocks.push({type:'decoTitle', text:inner});
+              toc.push({type:'deco', title:inner, id:'h-'+toc.length});
+            }
+          }else if(/^[-—−]+\s*\d+\s*[-—−]+$/.test(t)){
+            var num=t.replace(/[^0-9]/g,'');
+            var k='ch-'+num;
+            if(!seenHeadings.has(k)){
+              seenHeadings.add(k);
+              blocks.push({type:'chapter', num:num});
+              toc.push({type:'chapter', title:num+'장', num:num, id:'h-'+toc.length});
+            }
+          }else{
+            var key=t.toLowerCase();
+            if(!seenHeadings.has(key)){
+              seenHeadings.add(key);
+              blocks.push({type:'heading', text:t});
+              toc.push({type:'heading', title:t, id:'h-'+toc.length});
+            }
+          }
+        }else{
+          paraBuf.push(t);
+        }
+      }
+    }
+    flushPara();
+  }
+  function render(){
+    var bookHeader=document.getElementById('book-header');
+    var content=document.getElementById('reader-content');
+    bookHeader.innerHTML='';
+    content.innerHTML='';
+    var titleBlock=null;
+    for(var i=0;i<blocks.length;i++){ if(blocks[i].type==='bookTitle'){ titleBlock=blocks[i]; break; } }
+    if(titleBlock){
+      var d=document.createElement('div');
+      d.className='book-title-block';
+      var authorHtml = titleBlock.data.author ? '<div class="author-label">'+titleBlock.data.author.toUpperCase()+'</div>' : '';
+      d.innerHTML=authorHtml+'<div class="book-main-title">'+titleBlock.data.title+'</div><div class="ornament">•—•</div>';
+      bookHeader.appendChild(d);
+    }
+    for(var j=0;j<blocks.length;j++){
+      var b=blocks[j];
+      if(b.type==='bookTitle') continue;
+      if(b.type==='chapter'){
+        var el=document.createElement('div');
+        el.className='chapter-divider';
+        var idx= -1;
+        for(var k=0;k<toc.length;k++){ if(toc[k].type==='chapter' && toc[k].num===b.num){ idx=k; break; } }
+        el.id='h-'+idx;
+        el.innerHTML='<div class="line"></div><div class="num">-'+b.num+'-</div><div class="line"></div>';
+        content.appendChild(el);
+      }else if(b.type==='decoTitle'){
+        var el2=document.createElement('div');
+        el2.className='deco-title';
+        var idx2=-1;
+        for(var k2=0;k2<toc.length;k2++){ if(toc[k2].title===b.text){ idx2=k2; break; } }
+        el2.id='h-'+idx2;
+        el2.textContent=b.text;
+        content.appendChild(el2);
+      }else if(b.type==='heading'){
+        var el3=document.createElement('h2');
+        el3.className='deco-title';
+        el3.style.fontSize='20px';
+        var idx3=-1;
+        for(var k3=0;k3<toc.length;k3++){ if(toc[k3].title===b.text){ idx3=k3; break; } }
+        el3.id='h-'+idx3;
+        el3.textContent=b.text;
+        content.appendChild(el3);
+      }else{
+        var p=document.createElement('p');
+        p.textContent=b.text;
+        if(b.type==='dialogue') p.className='dialogue';
+        content.appendChild(p);
+      }
+    }
+    renderTOC();
+    updateProgress();
+    saveRecent();
+  }
+  function renderTOC(){
+    var list=document.getElementById('toc-list');
+    list.innerHTML='';
+    for(var i=0;i<toc.length;i++){
+      (function(i){
+        var item=toc[i];
+        var row=document.createElement('div');
+        row.className='toc-item';
+        row.setAttribute('data-id','h-'+i);
+        var num = item.type==='chapter' ? item.num : (i+1);
+        row.innerHTML='<span class="num">'+num+'</span><span class="title">'+item.title+'</span><span class="dots"></span><span class="page">'+(i+1)+'</span>';
+        function go(){
+          closeTOC();
+          var el=document.getElementById('h-'+i);
+          if(el) el.scrollIntoView({behavior:'smooth', block:'start'});
+        }
+        row.addEventListener('click', go);
+        row.addEventListener('touchend', function(ev){ ev.preventDefault(); go(); }, {passive:false});
+        list.appendChild(row);
+      })(i);
+    }
+  }
+  function openTOC(){ document.body.classList.add('toc-open'); }
+  function closeTOC(){ document.body.classList.remove('toc-open'); }
+  window.openTOC=openTOC;
+  window.closeTOC=closeTOC;
+  function updateProgress(){
+    var sc=window.scrollY;
+    var h=document.documentElement.scrollHeight - window.innerHeight;
+    var pct = h>0 ? Math.min(100, Math.round(sc/h*100)) : 0;
+    var fill=document.getElementById('progress-fill');
+    var txt=document.getElementById('progress-text');
+    if(fill) fill.style.width=pct+'%';
+    if(txt) txt.innerHTML='<b>'+pct+'%</b>';
+    try{
+      localStorage.setItem('lumen-progress', String(sc));
+      localStorage.setItem('lumen-pct', String(pct));
+    }catch(e){}
+  }
+  window.addEventListener('scroll', updateProgress, {passive:true});
+  function toggleBookmark(){
+    var y=window.scrollY;
+    try{
+      var bms=JSON.parse(localStorage.getItem('lumen-bm')||'[]');
+      bms.push({y:y, t:Date.now()});
+      localStorage.setItem('lumen-bm', JSON.stringify(bms.slice(-20)));
+    }catch(e){}
+    var el=document.getElementById('bm-toast');
+    if(el){ el.textContent='북마크 저장 '+Math.round(y)+'px'; el.style.opacity='1'; setTimeout(function(){ el.style.opacity='0'; }, 1800); }
+  }
+  window.toggleBookmark=toggleBookmark;
+  function saveRecent(){
+    var preview='';
+    for(var i=0;i<Math.min(3, blocks.length);i++){ preview+= (blocks[i].text||blocks[i].data && blocks[i].data.title || '')+' '; }
+    try{
+      localStorage.setItem('lumen-recent-preview', preview.slice(0,120));
+      localStorage.setItem('lumen-recent-time', String(Date.now()));
+    }catch(e){}
+  }
+  globalFile.addEventListener('change', function(e){
+    var file=e.target.files[0];
+    if(!file) return;
+    file.arrayBuffer().then(function(buf){
+      var text=smartDecode(buf);
+      parseText(text);
+      render();
+      try{ localStorage.setItem('lumen-last-file', file.name); }catch(e){}
+      var last=document.getElementById('last-file');
+      if(last) last.textContent=file.name;
+      window.scrollTo({top:0, behavior:'smooth'});
+    });
+  });
+  document.addEventListener('DOMContentLoaded', function(){
+    var openBtn=document.getElementById('open-btn');
+    if(openBtn){
+      openBtn.addEventListener('click', function(){ window.openFilePicker(); });
+      openBtn.addEventListener('touchend', function(ev){ ev.preventDefault(); window.openFilePicker(); }, {passive:false});
+    }
+    var tocBtn=document.getElementById('toc-btn');
+    if(tocBtn){
+      tocBtn.addEventListener('click', openTOC);
+      tocBtn.addEventListener('touchend', function(ev){ ev.preventDefault(); openTOC(); }, {passive:false});
+    }
+    var closeBtn=document.getElementById('toc-close');
+    if(closeBtn){
+      closeBtn.addEventListener('click', closeTOC);
+      closeBtn.addEventListener('touchend', function(ev){ ev.preventDefault(); closeTOC(); }, {passive:false});
+    }
+    var bmBtn=document.getElementById('bm-btn');
+    if(bmBtn){
+      bmBtn.addEventListener('click', toggleBookmark);
+      bmBtn.addEventListener('touchend', function(ev){ ev.preventDefault(); toggleBookmark(); }, {passive:false});
+    }
+    var dec=document.getElementById('font-dec');
+    var inc=document.getElementById('font-inc');
+    var prose=document.getElementById('reader-content');
+    if(dec && prose){
+      dec.addEventListener('click', function(){ var s=parseFloat(getComputedStyle(prose).fontSize); prose.style.fontSize=Math.max(14, s-1)+'px'; });
+      dec.addEventListener('touchend', function(ev){ ev.preventDefault(); var s=parseFloat(getComputedStyle(prose).fontSize); prose.style.fontSize=Math.max(14, s-1)+'px'; }, {passive:false});
+    }
+    if(inc && prose){
+      inc.addEventListener('click', function(){ var s=parseFloat(getComputedStyle(prose).fontSize); prose.style.fontSize=Math.min(26, s+1)+'px'; });
+      inc.addEventListener('touchend', function(ev){ ev.preventDefault(); var s=parseFloat(getComputedStyle(prose).fontSize); prose.style.fontSize=Math.min(26, s+1)+'px'; }, {passive:false});
+    }
+    var savedY=0;
+    try{ savedY=parseInt(localStorage.getItem('lumen-progress')||'0',10); }catch(e){}
+    if(savedY>80){ setTimeout(function(){ window.scrollTo(0,savedY); }, 320); }
+    var lastName='';
+    try{ lastName=localStorage.getItem('lumen-last-file')||''; }catch(e){}
+    if(lastName){ var lf=document.getElementById('last-file'); if(lf) lf.textContent=lastName; }
+  });
+  if('serviceWorker' in navigator){
+    window.addEventListener('load', function(){
+      navigator.serviceWorker.register('./sw.js').catch(function(){
+        var swCode = "const CACHE='lumen-ultimate-v2'; const ASSETS=['./','./index.html']; self.addEventListener('install',function(e){e.waitUntil(caches.open(CACHE).then(function(c){return c.addAll(ASSETS);}).then(function(){return self.skipWaiting();}));}); self.addEventListener('fetch',function(e){e.respondWith(caches.match(e.request).then(function(r){return r||fetch(e.request);}));});";
+        var blob=new Blob([swCode],{type:'text/javascript'});
+        var url=URL.createObjectURL(blob);
+        navigator.serviceWorker.register(url).catch(function(){});
+      });
+    });
+  }
+  var sample = "코난) 셜록 홈즈의 모험 [코난 도일]\n\n-1-\n\n● 보헤미아의 스캔들 ●\n\n지난해 3월, 나는 셜록 홈즈와 함께 베이커가 221B에서 조용한 오후를 보내고 있었다. 창밖으로는 런던의 안개가 자욱하게 깔려 있었고, 벽난로의 불빛이 서재를 따뜻하게 비추고 있었다.\n\n\"왓슨, 자네는 사랑이 얼마나 위험한 감정인지 아는가?\" 홈즈가 갑자기 물었다. 그의 눈은 멀리 어딘가를 응시하고 있었다.\n\n나는 대답했다. \"사랑이라... 그건 인간을 가장 인간답게 만드는 감정이 아닐까?\"\n\n홈즈는 피식 웃으며 말했다. \"감정은 논리를 흐리게 하지. 하지만 이번 사건은 조금 다르군.\"\n\n-2-\n\n● 붉은 머리 연맹 ●\n\n다음 날 아침, 우리의 방문자는 붉은 머리를 가진 전당포 주인이었다. 그의 얼굴은 흥분으로 붉어져 있었다.\n\n\"홈즈 씨, 도대체 이게 어떻게 된 일인지 모르겠습니다!\" 그가 외쳤다.\n\n나는 그의 이야기를 주의 깊게 들었다. 그것은 분명 이상한 사건이었다.\n\n-3-\n\n● 다섯 개의 오렌지 씨앗 ●\n\n며칠 후, 우리는 또 다른 의뢰인을 맞이했다. 그는 손에 다섯 개의 오렌지 씨앗을 들고 있었다.\n\n\"이 씨앗들이 제 가족을 죽음으로 몰아넣고 있습니다.\" 그의 목소리는 떨리고 있었다.\n\n홈즈의 눈빛이 날카롭게 빛났다. \"흥미롭군. 매우 흥미로워.\"\n";
+  parseText(sample);
+  document.addEventListener('DOMContentLoaded', render);
+})();
+</script>
+</body>
+</html>
