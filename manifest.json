@@ -1,20 +1,23 @@
 {
-  "name": "Lumen Reader - 아름다운 서재",
+  "name": "Lumen - 아름다운 서재",
   "short_name": "Lumen",
+  "description": "Apple Books처럼 아름다운 한글 소설 리더",
+  "start_url": "./",
   "display": "standalone",
   "background_color": "#FFFEFB",
   "theme_color": "#1A1A18",
-  "start_url": "./",
   "icons": [
     {
-      "src": "icon-192.png",
+      "src": "./icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "./icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
